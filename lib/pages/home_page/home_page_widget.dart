@@ -72,6 +72,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 'Hello World',
                 style: FlutterFlowTheme.of(context).bodyText1,
               ),
+              Text(
+                'Hello World',
+                style: FlutterFlowTheme.of(context).bodyText1,
+              ),
             ],
           ),
         ),
