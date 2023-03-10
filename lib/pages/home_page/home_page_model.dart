@@ -7,11 +7,10 @@ import 'package:provider/provider.dart';
 class HomePageModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
 
-  String title = "FlutterFlow Test";
-
   void initState(BuildContext context) {}
 
   void dispose() {}
 
   /// Additional helper methods are added here.
+
 }
