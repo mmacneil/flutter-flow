@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -56,27 +57,46 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'Hello World',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+          child: FutureBuilder<ApiCallResponse>(
+            future: GetUsersCall.call(),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: CircularProgressIndicator(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
                   ),
-                ],
-              ),
-              Text(
-                'Hello World',
-                style: FlutterFlowTheme.of(context).bodyText1,
-              ),
-              Text(
-                'Hello World',
-                style: FlutterFlowTheme.of(context).bodyText1,
-              ),
-            ],
+                );
+              }
+              final columnGetUsersResponse = snapshot.data!;
+              return Builder(
+                builder: (context) {
+                  final colFirstName = GetUsersCall.firstName(
+                        columnGetUsersResponse.jsonBody,
+                      )?.toList() ??
+                      [];
+                  return SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: List.generate(colFirstName.length,
+                          (colFirstNameIndex) {
+                        final colFirstNameItem =
+                            colFirstName[colFirstNameIndex];
+                        return Text(
+                          colFirstNameItem.toString(),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                        );
+                      }),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
